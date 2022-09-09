@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package io.brianbig.chat;
+option java_package = "io.brianbig.chat";
+
+message User{
+  string userName = 1;
+  string email = 2;
+}
+
+message ChatMessage{
+  User from = 1;
+  string message = 2;
+}
+
+message ChatMessageFromServer{
+  google.protobuf.Timestamp timestamp = 1;
+  ChatMessage chatMessage = 2;
+
+}
+
+service ChatService{
+  rpc chat(stream ChatMessage) returns (stream ChatMessageFromServer);
+}
